@@ -16,15 +16,14 @@ A lightweight REST API application built in Golang to monitor Linux server healt
 
 
 server-monitor/
-├── main.go                # Starts the HTTP server
-├── monitor/               # Contains system metric logic
+├── main.go                 # Starts the HTTP server
+├── monitor/                # Contains system metric logic
 │   ├── cpu.go
 │   ├── memory.go
 │   ├── disk.go
 │   └── uptime.go
 └── api/
-└── server.go          # Exposes /stats and /uptime APIs
-
+    └── server.go           # Exposes /stats and /uptime APIs
 
 ## 📦 Requirements
 

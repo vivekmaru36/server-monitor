@@ -43,9 +43,7 @@ go mod tidy
 
 # Run the app
 go run main.go
-````
 
----
 
 ## 🌐 API Endpoints
 
@@ -71,11 +69,7 @@ go run main.go
 
 ### `GET /uptime`
 
-```
 up 40 minutes
-```
-
----
 
 ## 🛠️ Work in Progress
 
@@ -83,16 +77,3 @@ up 40 minutes
 * [ ] Add Prometheus `/metrics` endpoint
 * [ ] Logging & request audit
 * [ ] Docker support
-
----
-
-## 📄 License
-
-MIT © [Vivek Maru](https://github.com/vivekmaru36)
-
-```
-
----
-
-Let me know if you want this in a file or want to push it to GitHub — and good luck for Day 2 tomorrow!
-```

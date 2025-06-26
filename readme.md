@@ -2,7 +2,7 @@
 
 A lightweight REST API application built in Golang to monitor Linux server health in real-time.
 
-
+---
 ## 🚀 Features
 
 - 📈 **CPU Usage** – Real-time percentage.
@@ -11,7 +11,7 @@ A lightweight REST API application built in Golang to monitor Linux server healt
 - ⏱️ **Uptime** – How long the system has been running.
 - 🌐 **REST API Endpoints** – Access system info from a browser or external tools.
 
-
+---
 ## 📁 Project Structure
 
 

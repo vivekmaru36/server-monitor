@@ -10,7 +10,9 @@ A lightweight REST API application built in Golang to monitor Linux server healt
 - 💾 **Memory Usage** – Used memory percentage
 - 🧮 **Disk Usage** – Disk space used on root (`/`) partition
 - ⏱️ **Uptime** – How long the system has been running
-- 🌐 **REST API Endpoints** – Access system info from a browser or external tools
+- 🌐 **REST API Endpoints** – `/stats`, `/uptime`, `/health`, `/metrics`
+- 📊 **Prometheus Metrics Exporter** – Exposes real-time resource stats
+- 🔁 **Auto-updating Metrics** – Background goroutine updates every 5s
 
 ---
 
@@ -26,7 +28,7 @@ server-monitor/
 │   ├── disk.go
 │   └── uptime.go
 └── api/
-└── server.go           # Exposes /stats and /uptime APIs
+└── server.go           # Exposes API routes and metrics
 
 ````
 
@@ -52,19 +54,20 @@ go mod tidy
 # Run the app
 go run main.go
 
-# Run on client machine
-curl http://localhost:8080/stats
-
+# From another machine or browser
+curl http://<your-server-ip>:8080/stats
 ````
 
 ---
 
 ## 🌐 API Endpoints
 
-| Endpoint  | Description                            |
-| --------- | -------------------------------------- |
-| `/stats`  | Returns CPU, RAM, Disk, Uptime as JSON |
-| `/uptime` | Returns uptime as plain text           |
+| Method | Endpoint   | Description                            |
+| ------ | ---------- | -------------------------------------- |
+| GET    | `/stats`   | Returns CPU, RAM, Disk, Uptime as JSON |
+| GET    | `/uptime`  | Returns system uptime in plain text    |
+| GET    | `/health`  | Health check for service monitoring    |
+| GET    | `/metrics` | Prometheus-compatible metrics endpoint |
 
 ---
 
@@ -91,7 +94,8 @@ up 40 minutes
 
 ## 🛠️ Work in Progress
 
-* [ ] Add `/health` endpoint
-* [ ] Add Prometheus `/metrics` endpoint
+* [x] Add `/health` endpoint
+* [x] Add Prometheus `/metrics` endpoint
+* [x] Auto-updating metric values (background goroutine)
 * [ ] Logging & request audit
 * [ ] Docker support

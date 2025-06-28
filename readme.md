@@ -137,3 +137,8 @@ up 40 minutes
 - [ ] Lightweight web dashboard
 
 ---
+
+current web page display and terminal display 
+
+![alt text](image.png)
+

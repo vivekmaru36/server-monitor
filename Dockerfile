@@ -8,16 +8,17 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o monitor .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o server-monitor .
 
 # Stage 2: Lightweight image
 FROM debian:bullseye-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/monitor .
+# Copy binary and static files
+COPY --from=builder /app/server-monitor .
+COPY --from=builder /app/static ./static
 
 EXPOSE 8080
 
-# CMD ["./monitor"]
 CMD ["./server-monitor"]

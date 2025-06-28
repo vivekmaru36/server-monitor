@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linux Server Monitor</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #f0f0f0; padding: 20px; }
+    h1 { color: #00e676; }
+    .metric { margin: 20px 0; }
+    .bar { background: #333; border-radius: 5px; height: 20px; width: 100%; overflow: hidden; }
+    .fill { background: #00e676; height: 100%; width: 0%; }
+  </style>
+</head>
+<body>
+  <h1>🖥️ Linux Server Dashboard</h1>
+  <div class="metric">
+    ⏱ Uptime: <span id="uptime">Loading...</span>
+  </div>
+  <div class="metric">
+    📈 CPU Usage: <span id="cpu">0%</span>
+    <div class="bar"><div id="cpuBar" class="fill"></div></div>
+  </div>
+  <div class="metric">
+    💾 Memory Usage: <span id="memory">0%</span>
+    <div class="bar"><div id="memBar" class="fill"></div></div>
+  </div>
+  <div class="metric">
+    📦 Disk Usage: <span id="disk">0%</span>
+    <div class="bar"><div id="diskBar" class="fill"></div></div>
+  </div>
+
+  <script>
+    async function fetchStats() {
+      try {
+        const res = await fetch("/stats");
+        const data = await res.json();
+
+        document.getElementById("uptime").textContent = data.uptime;
+        document.getElementById("cpu").textContent = data.cpu_usage.toFixed(1) + "%";
+        document.getElementById("memory").textContent = data.memory_usage.toFixed(1) + "%";
+        document.getElementById("disk").textContent = data.disk_usage.toFixed(1) + "%";
+
+        document.getElementById("cpuBar").style.width = data.cpu_usage + "%";
+        document.getElementById("memBar").style.width = data.memory_usage + "%";
+        document.getElementById("diskBar").style.width = data.disk_usage + "%";
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+      }
+    }
+
+    setInterval(fetchStats, 5000);
+    fetchStats();
+  </script>
+</body>
+</html>

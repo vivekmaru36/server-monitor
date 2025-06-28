@@ -136,6 +136,8 @@ func StartServer() {
 	mux.HandleFunc("/uptime", uptimeHandler)
 	mux.HandleFunc("/health", healthHandler)
 	mux.Handle("/metrics", promhttp.Handler())
+	mux.Handle("/", http.FileServer(http.Dir("./")))
+
 
 	// Wrap with logging middleware
 	loggedMux := loggingMiddleware(mux)

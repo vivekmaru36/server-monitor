@@ -11,6 +11,10 @@ type Stats struct {
 	CPUUsage    float64 `json:"cpu_usage"`
 	MemoryUsage float64 `json:"memory_usage"`
 	DiskUsage   float64 `json:"disk_usage"`
+	CPUCore     int     `json:"cpu_cores"`
+	Load1       float64 `json:"load_1"`
+	Load5       float64 `json:"load_5"`
+	Load15      float64 `json:"load_15"`
 }
 
 func statsHandler(w http.ResponseWriter, r *http.Request) {
@@ -18,6 +22,8 @@ func statsHandler(w http.ResponseWriter, r *http.Request) {
 	mem, _ := monitor.GetMemoryUsage()
 	disk, _ := monitor.GetDiskUsage()
 	uptime, _ := monitor.GetUptime()
+	cores, _ := monitor.GetCPUCoreCount()
+	load, _ := monitor.GetLoadAverage()
 
 	cpuGauge.Set(cpu)
 	memGauge.Set(mem)
@@ -28,6 +34,10 @@ func statsHandler(w http.ResponseWriter, r *http.Request) {
 		CPUUsage:    cpu,
 		MemoryUsage: mem,
 		DiskUsage:   disk,
+		CPUCore:     cores,
+		Load1:       load.Load1,
+		Load5:       load.Load5,
+		Load15:      load.Load15,
 	}
 
 	w.Header().Set("Content-Type", "application/json")

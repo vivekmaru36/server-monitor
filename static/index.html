@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Linux Server Monitor</title>
   <style>
-    body { font-family: sans-serif; background: #111; color: #f0f0f0; padding: 20px; }
-    h1 { color: #00e676; }
-    .metric { margin: 20px 0; }
-    .bar { background: #333; border-radius: 5px; height: 20px; width: 100%; overflow: hidden; }
-    .fill { background: #00e676; height: 100%; width: 0%; }
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #f0f0f0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00e676;
+    }
+
+    .metric {
+      margin: 20px 0;
+    }
+
+    .bar {
+      background: #333;
+      border-radius: 5px;
+      height: 20px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .fill {
+      background: #00e676;
+      height: 100%;
+      width: 0%;
+    }
   </style>
 </head>
+
 <body>
   <h1>🖥️ Linux Server Dashboard</h1>
   <div class="metric">
@@ -17,15 +42,25 @@
   </div>
   <div class="metric">
     📈 CPU Usage: <span id="cpu">0%</span>
-    <div class="bar"><div id="cpuBar" class="fill"></div></div>
+    <div class="bar">
+      <div id="cpuBar" class="fill"></div>
+    </div>
   </div>
   <div class="metric">
     💾 Memory Usage: <span id="memory">0%</span>
-    <div class="bar"><div id="memBar" class="fill"></div></div>
+    <div class="bar">
+      <div id="memBar" class="fill"></div>
+    </div>
   </div>
   <div class="metric">
     📦 Disk Usage: <span id="disk">0%</span>
-    <div class="bar"><div id="diskBar" class="fill"></div></div>
+    <div class="bar">
+      <div id="diskBar" class="fill"></div>
+    </div>
+  </div>
+  <div class="metric">
+    🧠 CPU Cores: <span id="cores">-</span><br>
+    🔄 Load Avg (1m / 5m / 15m): <span id="load">-</span>
   </div>
 
   <script>
@@ -42,6 +77,14 @@
         document.getElementById("cpuBar").style.width = data.cpu_usage + "%";
         document.getElementById("memBar").style.width = data.memory_usage + "%";
         document.getElementById("diskBar").style.width = data.disk_usage + "%";
+
+        // cpu cores display
+        document.getElementById("cores").textContent = data.cpu_cores;
+        document.getElementById("load").textContent =
+          data.load_1.toFixed(2) + " / " +
+          data.load_5.toFixed(2) + " / " +
+          data.load_15.toFixed(2);
+          
       } catch (err) {
         console.error("Error fetching stats:", err);
       }
@@ -51,4 +94,5 @@
     fetchStats();
   </script>
 </body>
+
 </html>

@@ -6,12 +6,12 @@ import (
 	"server-monitor/monitor"
 )
 
-type Stats struct(
+type Stats struct{
 	Uptime string `json:"uptime"`
 	CPUUsage float64 `json:"cpu_usage`
 	MemoryUsage float64 `json:"memory_usage"`
 	DiskUsage float64 `json:"disk_usage"`
-) 
+} 
 
 func statsHandler(w http.ResponseWriter,r *http.Request)  {
 	cpu, _ := monitor.GetCPUUsage()

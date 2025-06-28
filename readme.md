@@ -3,17 +3,20 @@
 A lightweight REST API application built in Golang to monitor Linux server health in real-time.
 
 ---
+
 ## 🚀 Features
 
-- 📈 **CPU Usage** – Real-time percentage.
-- 💾 **Memory Usage** – Used memory percentage.
-- 🧮 **Disk Usage** – Disk space used on root (`/`) partition.
-- ⏱️ **Uptime** – How long the system has been running.
-- 🌐 **REST API Endpoints** – Access system info from a browser or external tools.
+- 📈 **CPU Usage** – Real-time percentage
+- 💾 **Memory Usage** – Used memory percentage
+- 🧮 **Disk Usage** – Disk space used on root (`/`) partition
+- ⏱️ **Uptime** – How long the system has been running
+- 🌐 **REST API Endpoints** – Access system info from a browser or external tools
 
 ---
+
 ## 📁 Project Structure
 
+```
 
 server-monitor/
 ├── main.go                 # Starts the HTTP server
@@ -23,18 +26,24 @@ server-monitor/
 │   ├── disk.go
 │   └── uptime.go
 └── api/
-    └── server.go           # Exposes /stats and /uptime APIs
+└── server.go           # Exposes /stats and /uptime APIs
+
+````
+
+---
 
 ## 📦 Requirements
 
 - Go 1.19+
 - Linux or WSL2 environment
 
+---
+
 ## 🔧 Setup & Run
 
 ```bash
 # Clone the project
-git clone 
+git clone https://github.com/yourusername/server-monitor.git
 cd server-monitor
 
 # Initialize dependencies
@@ -43,6 +52,12 @@ go mod tidy
 # Run the app
 go run main.go
 
+# Run on client machine
+curl http://localhost:8080/stats
+
+````
+
+---
 
 ## 🌐 API Endpoints
 
@@ -68,7 +83,11 @@ go run main.go
 
 ### `GET /uptime`
 
+```
 up 40 minutes
+```
+
+---
 
 ## 🛠️ Work in Progress
 

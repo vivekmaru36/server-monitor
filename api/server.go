@@ -43,6 +43,14 @@ func uptimeHandler(w http.ResponseWriter, r *http.Request)  {
 func StartServer()  {
 	http.HandleFunc("/stats",statsHandler)
 	http.HandleFunc("/uptime",uptimeHandler)
+	http.HandleFunc("/health",healthHandler)
 
 	http.ListenAndServe(":8080",nil)
+}
+
+
+// health handler
+func healthHandler(w http.ResponseWriter, r *http.Request)  {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
 }

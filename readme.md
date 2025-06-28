@@ -1,3 +1,4 @@
+
 # 🖥️ Linux Server Monitor (Go)
 
 A lightweight REST API application built in Golang to monitor Linux server health in real-time.
@@ -13,6 +14,7 @@ A lightweight REST API application built in Golang to monitor Linux server healt
 - 🌐 **REST API Endpoints** – `/stats`, `/uptime`, `/health`, `/metrics`
 - 📊 **Prometheus Metrics Exporter** – Exposes real-time resource stats
 - 🔁 **Auto-updating Metrics** – Background goroutine updates every 5s
+- 🐳 **Dockerized** – Easily deployable anywhere with Docker
 
 ---
 
@@ -27,8 +29,9 @@ server-monitor/
 │   ├── memory.go
 │   ├── disk.go
 │   └── uptime.go
-└── api/
-└── server.go           # Exposes API routes and metrics
+├── api/
+│   └── server.go           # Exposes API routes and metrics
+└── Dockerfile              # Container build instructions
 
 ````
 
@@ -36,19 +39,20 @@ server-monitor/
 
 ## 📦 Requirements
 
-- Go 1.19+
+- Go 1.21+ (You used Go 1.24.4)
 - Linux or WSL2 environment
+- Docker (optional, but supported)
 
 ---
 
-## 🔧 Setup & Run
+## 🔧 Setup & Run (Without Docker)
 
 ```bash
 # Clone the project
-git clone https://github.com/yourusername/server-monitor.git
+git clone https://github.com/vivekmaru36/server-monitor.git
 cd server-monitor
 
-# Initialize dependencies
+# Initialize Go modules
 go mod tidy
 
 # Run the app
@@ -57,6 +61,36 @@ go run main.go
 # From another machine or browser
 curl http://<your-server-ip>:8080/stats
 ````
+
+---
+
+## 🐳 Docker Usage
+
+### 📄 Build the image
+
+```bash
+docker build -t server-monitor .
+```
+
+### ▶️ Run the container
+
+```bash
+docker run -p 8080:8080 --name monitor server-monitor
+```
+
+### ▶️ Troubleshoot the container if it runs once than stops
+
+```bash
+docker rm monitor
+docker run -p 8080:8080 --name monitor server-monitor
+```
+### ✅ Test the API
+
+```bash
+curl http://localhost:8080/stats
+curl http://localhost:8080/uptime
+curl http://localhost:8080/metrics
+```
 
 ---
 
@@ -97,5 +131,9 @@ up 40 minutes
 * [x] Add `/health` endpoint
 * [x] Add Prometheus `/metrics` endpoint
 * [x] Auto-updating metric values (background goroutine)
-* [ ] Logging & request audit
-* [ ] Docker support
+* [x] Docker support
+- [ ] Request logging  
+- [ ] Controlled shutdown (safe exit on SIGINT/SIGTERM)  
+- [ ] Lightweight web dashboard
+
+---

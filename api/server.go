@@ -136,7 +136,14 @@ func StartServer() {
 	mux.HandleFunc("/uptime", uptimeHandler)
 	mux.HandleFunc("/health", healthHandler)
 	mux.Handle("/metrics", promhttp.Handler())
-	mux.Handle("/", http.FileServer(http.Dir("./")))
+	// mux.Handle("/", http.FileServer(http.Dir("./"))) --> display files incase
+	// mux.Handle("/", http.FileServer(http.Dir("./static")))
+	// mux.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./static"))))
+
+	// make it only respond on /dashboard
+	mux.Handle("/dashboard/", http.StripPrefix("/dashboard/", http.FileServer(http.Dir("./static"))))
+
+
 
 
 	// Wrap with logging middleware

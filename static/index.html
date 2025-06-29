@@ -23,7 +23,7 @@
       background: #333;
       border-radius: 5px;
       height: 20px;
-      width: 100%;
+      width: 50%;
       overflow: hidden;
     }
 
@@ -62,33 +62,83 @@
     🧠 CPU Cores: <span id="cores">-</span><br>
     🔄 Load Avg (1m / 5m / 15m): <span id="load">-</span>
   </div>
+  <!-- Hostname and os info -->
+  <div class="metric">
+    🧾 Hostname: <span id="host">-</span><br>
+    🐧 OS: <span id="os">-</span>
+  </div>
 
   <script>
+    // async function fetchStats() {
+    //   try {
+    //     const res = await fetch("/stats");
+    //     const data = await res.json();
+
+    //     document.getElementById("uptime").textContent = data.uptime;
+    //     document.getElementById("cpu").textContent = data.cpu_usage.toFixed(1) + "%";
+    //     document.getElementById("memory").textContent = data.memory_usage.toFixed(1) + "%";
+    //     document.getElementById("disk").textContent = data.disk_usage.toFixed(1) + "%";
+
+    //     document.getElementById("cpuBar").style.width = data.cpu_usage + "%";
+    //     document.getElementById("memBar").style.width = data.memory_usage + "%";
+    //     document.getElementById("diskBar").style.width = data.disk_usage + "%";
+
+    //     // cpu cores display
+    //     document.getElementById("cores").textContent = data.cpu_cores;
+    //     document.getElementById("load").textContent =
+    //       data.load_1.toFixed(2) + " / " +
+    //       data.load_5.toFixed(2) + " / " +
+    //       data.load_15.toFixed(2);
+
+    //   } catch (err) {
+    //     console.error("Error fetching stats:", err);
+    //   }
+    // }
+
     async function fetchStats() {
       try {
         const res = await fetch("/stats");
         const data = await res.json();
 
+        // hostname and os
+        document.getElementById("host").textContent = data.hostname;
+        document.getElementById("os").textContent = data.os;
+
+        // Uptime and usage text
         document.getElementById("uptime").textContent = data.uptime;
         document.getElementById("cpu").textContent = data.cpu_usage.toFixed(1) + "%";
         document.getElementById("memory").textContent = data.memory_usage.toFixed(1) + "%";
         document.getElementById("disk").textContent = data.disk_usage.toFixed(1) + "%";
 
+        // Bar widths
         document.getElementById("cpuBar").style.width = data.cpu_usage + "%";
         document.getElementById("memBar").style.width = data.memory_usage + "%";
         document.getElementById("diskBar").style.width = data.disk_usage + "%";
 
-        // cpu cores display
+        // CPU core count
         document.getElementById("cores").textContent = data.cpu_cores;
-        document.getElementById("load").textContent =
+
+        // Load average and color
+        const loadSpan = document.getElementById("load");
+        const cores = data.cpu_cores;
+        loadSpan.textContent =
           data.load_1.toFixed(2) + " / " +
           data.load_5.toFixed(2) + " / " +
           data.load_15.toFixed(2);
-          
+
+        if (data.load_1 > cores) {
+          loadSpan.style.color = "#ff5252";  // 🔴 Red
+        } else if (data.load_1 > cores * 0.7) {
+          loadSpan.style.color = "#ffd54f";  // 🟡 Yellow
+        } else {
+          loadSpan.style.color = "#00e676";  // 🟢 Green
+        }
+
       } catch (err) {
         console.error("Error fetching stats:", err);
       }
     }
+
 
     setInterval(fetchStats, 5000);
     fetchStats();
